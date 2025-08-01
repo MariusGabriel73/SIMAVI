@@ -1,0 +1,33 @@
+{
+  "generator-jhipster": {
+    "applicationType": "monolith",
+    "authenticationType": "jwt",
+    "baseName": "medicalsystem",
+    "buildTool": "maven",
+    "cacheProvider": null,
+    "clientFramework": "react",
+    "clientTestFrameworks": [],
+    "clientTheme": "none",
+    "creationTimestamp": 1754049529787,
+    "databaseType": "sql",
+    "devDatabaseType": "postgresql",
+    "enableHibernateCache": null,
+    "enableTranslation": true,
+    "entities": [],
+    "feignClient": null,
+    "jhipsterVersion": "8.11.0",
+    "jwtSecretKey": "MjBiNjMyODU2NDE4ZTYyOTFjNjA2MjNlNjAxNTY1MzRlNjY3NDJlOTQ5MjEyZDJhYjUwOWZhNjVjZmYwNDEwYTZlZmFjODJiYzhjMDVlNjRiYWM0OTRiYjVlOWM4ZmFlNjdkZmQ1NGU2NTUxMThlNDFkYjhjMTNhZWZiMGVlNDA=",
+    "languages": ["en"],
+    "microfrontend": null,
+    "microfrontends": [],
+    "nativeLanguage": "en",
+    "packageName": "com.mycompany.myapp",
+    "prodDatabaseType": "postgresql",
+    "reactive": true,
+    "serverPort": null,
+    "serviceDiscoveryType": null,
+    "syncUserWithIdp": null,
+    "testFrameworks": [],
+    "withAdminUi": true
+  }
+}
