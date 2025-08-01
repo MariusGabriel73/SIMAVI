@@ -7,7 +7,16 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
-        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
+        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
+        "pacientMedApp": "Pacient",
+        "medicMedApp": "Medic",
+        "specializareMedApp": "Specializare",
+        "clinicaMedApp": "Clinica",
+        "locatieMedApp": "Locatie",
+        "programMedApp": "Program",
+        "programareMedApp": "Programare",
+        "fisaMedicalaMedApp": "Fisa Medicala",
+        "raportProgramareMedApp": "Raport Programare"
       },
       "account": {
         "main": "Account",
