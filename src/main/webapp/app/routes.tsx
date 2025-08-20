@@ -32,7 +32,14 @@ const AppRoutes = () => {
     <div className="view-routes">
       <ErrorBoundaryRoutes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/pacient" element={<PacientPage />} />
+        <Route
+          path="/pacient"
+          element={
+            <PrivateRoute hasAnyAuthorities={[AUTHORITIES.USER, AUTHORITIES.ADMIN]}>
+              <PacientPage />
+            </PrivateRoute>
+          }
+        />
         <Route path="login" element={<Login />} />
         <Route path="logout" element={<Logout />} />
         <Route path="account">

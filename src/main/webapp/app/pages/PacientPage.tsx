@@ -34,11 +34,34 @@ function toDayRangeISO(dateStr: string) {
 function buildSlots(programs: Program[], selectedDate: string, taken: Programare[]) {
   if (!selectedDate) return [];
   const date = dayjs(selectedDate);
-  const dayOfWeek = date.format('dddd').toUpperCase(); // MONDAY, TUESDAY etc., ajustați dacă backend-ul folosește alt format
+
+  // indexul zilei: 0 = Duminică ... 6 = Sâmbătă
+  const dowIndex = date.day();
+  const EN = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
+  const RO = ['DUMINICA', 'LUNI', 'MARTI', 'MIERCURI', 'JOI', 'VINERI', 'SAMBATA'];
+  const keysForDay = new Set([EN[dowIndex], RO[dowIndex]]);
+
+  // normalizăm stringul zilei din program (upper + fără diacritice)
+  const normalize = (s: string) => {
+    const up = (s || '').toUpperCase();
+    const map: Record<string, string> = {
+      Ă: 'A',
+      Â: 'A',
+      Î: 'I',
+      Ș: 'S',
+      Ş: 'S',
+      Ț: 'T',
+      Ţ: 'T',
+    };
+    return up.replace(/[ĂÂÎȘŞȚŢ]/g, ch => map[ch] || ch);
+  };
 
   // colectăm intervalele orare pentru ziua selectată
   const intervals = programs
-    .filter(p => (p.ziuaSaptamanii || '').toUpperCase().includes(dayOfWeek))
+    .filter(p => {
+      const key = normalize(p.ziuaSaptamanii || '');
+      return Array.from(keysForDay).some(k => key.includes(k));
+    })
     .map(p => {
       const startT = dayjs(p.oraStart);
       const endT = dayjs(p.oraFinal);
@@ -47,6 +70,7 @@ function buildSlots(programs: Program[], selectedDate: string, taken: Programare
       return { start, end };
     });
 
+  // sloturi deja ocupate (comparație la nivel de minut)
   const takenSet = new Set(taken.map(a => dayjs(a.dataProgramare).second(0).millisecond(0).toISOString()));
 
   const now = dayjs();
@@ -64,13 +88,13 @@ function buildSlots(programs: Program[], selectedDate: string, taken: Programare
     }
   });
 
-  // ordonăm și eliminăm duplicate dacă sunt intervale suprapuse
+  // deduplicăm
   const unique = new Map<string, { iso: string; label: string; disabled: boolean }>();
   slots
     .sort((a, b) => (a.iso < b.iso ? -1 : 1))
     .forEach(s => {
       if (!unique.has(s.iso)) unique.set(s.iso, s);
-      else if (s.disabled) unique.set(s.iso, s); // dacă dublură, păstrăm disabled dacă apare
+      else if (s.disabled) unique.set(s.iso, s);
     });
 
   return Array.from(unique.values());
@@ -324,7 +348,7 @@ export default function PacientPage() {
             </div>
 
             <div className="col-md-4">
-              <label className="form-label">Specializare</label>
+              <label className="form-label">Secție medicală</label>
               <select
                 className="form-select"
                 value={specializareId ?? ''}
@@ -336,7 +360,7 @@ export default function PacientPage() {
                   setSelectedSlotIso('');
                 }}
               >
-                <option value="">— alege specializarea —</option>
+                <option value="">— alege secția medicală —</option>
                 {specializari.map(s => (
                   <option key={s.id} value={s.id}>
                     {s.nume}

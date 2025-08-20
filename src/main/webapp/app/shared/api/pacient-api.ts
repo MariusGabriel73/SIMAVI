@@ -1,5 +1,7 @@
-// app/shared/api/patient-api.ts
 import axios from 'axios';
+
+// Folosește axios-ul global configurat de aplicație
+const api = axios;
 
 export type ID = number;
 
@@ -61,8 +63,6 @@ export interface Programare {
   locatie?: Locatie;
   locatieId?: ID;
 }
-
-const api = axios.create({ baseURL: '/' });
 
 export async function getClinici() {
   const { data } = await api.get<Clinica[]>('/api/clinicas', { params: { size: 1000 } });
