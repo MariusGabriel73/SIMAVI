@@ -1,21 +1,10 @@
 # ===================================================================
 # Spring Boot configuration.
-#
-# This configuration will be overridden by the Spring profile you use,
-# for example application-dev.yml if you use the "dev" profile.
-#
-# More information on profiles: https://www.jhipster.tech/profiles/
-# More information on configuration properties: https://www.jhipster.tech/common-application-properties/
-# ===================================================================
-
-# ===================================================================
-# Standard Spring Boot properties.
-# Full reference is available at:
-# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# This configuration can be overridden by profile-specific files
+# like application-dev.yml, application-prod.yml, etc.
 # ===================================================================
 
 ---
-# Conditionally disable springdoc on missing api-docs profile
 spring:
   application:
     name: medicalsystem
@@ -66,6 +55,18 @@ server:
       cookie:
         http-only: true
 
+# >>> ADĂUGAT: Actuator pe /management și expunere health/info
+management:
+  endpoints:
+    web:
+      base-path: /management
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when_authorized
+# <<< SFÂRȘIT ADĂUGAT
+
 springdoc:
   show-actuator: true
 
@@ -87,14 +88,10 @@ jhipster:
     content-security-policy: "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:"
 
 # jhipster-needle-add-application-yaml-document
+
 ---
 # ===================================================================
-# Application specific properties
-# Add your own application properties here, see the ApplicationProperties class
-# to have type-safe configuration, like in the JHipsterProperties above
-#
-# More documentation is available at:
-# https://www.jhipster.tech/common-application-properties/
+# Application specific properties (poți adăuga ce ai nevoie aici)
 # ===================================================================
 
 # application:
