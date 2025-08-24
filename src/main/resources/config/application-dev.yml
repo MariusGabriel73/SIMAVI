@@ -44,7 +44,7 @@ spring:
   r2dbc:
     url: r2dbc:postgresql://localhost:5432/medicalsystem
     username: postgres
-    password: parola
+    password: 1234
   thymeleaf:
     cache: false
 
