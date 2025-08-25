@@ -1,6 +1,7 @@
 package com.mycompany.myapp.repository;
 
 import com.mycompany.myapp.domain.Programare;
+import java.time.Instant;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
@@ -39,6 +40,12 @@ public interface ProgramareRepository extends ReactiveCrudRepository<Programare,
 
     @Query("SELECT * FROM programare entity WHERE entity.id not in (select raport_programare_id from raport_programare)")
     Flux<Programare> findAllWhereRaportProgramareIsNull();
+
+    //Selecteaza programarile dupa medic
+    @Query(
+        " SELECT * FROM programare entity WHERE entity.medic_id = :medicId AND entity.locatie_id = :locatieId AND entity.data_programare BETWEEN :from AND :to ORDER BY entity.data_programare ASC"
+    )
+    Flux<Programare> findByMedicIdAndLocatieIdAndDataProgramareBetween(Long medicId, Long locatieId, Instant from, Instant to);
 
     @Override
     <S extends Programare> Mono<S> save(S entity);

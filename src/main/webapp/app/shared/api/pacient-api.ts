@@ -138,13 +138,15 @@ export async function createAppointment(
   return data;
 }
 
-export async function updateAppointment(id: ID, p: Partial<Programare>) {
-  const { data } = await api.patch<Programare>(`/api/programares/${id}`, p, {
+export async function updateAppointment(id: ID, patch: Partial<Programare>) {
+  const body = { id, ...patch }; // <— include ID în body
+  const res = await axios.patch<Programare>(`/api/programares/${id}`, body, {
     headers: { 'Content-Type': 'application/merge-patch+json' },
   });
-  return data;
+  return res.data;
 }
 
 export async function cancelAppointment(id: ID) {
-  return updateAppointment(id, { status: ProgramareStatus.ANULATA });
+  // ajustează numele exact al valorii din enum dacă diferă
+  return updateAppointment(id, { id, status: ProgramareStatus.ANULATA as any });
 }

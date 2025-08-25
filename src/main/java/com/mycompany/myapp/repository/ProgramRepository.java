@@ -28,6 +28,10 @@ public interface ProgramRepository extends ReactiveCrudRepository<Program, Long>
     @Query("SELECT * FROM program entity WHERE entity.locatie_id IS NULL")
     Flux<Program> findAllWhereLocatieIsNull();
 
+    // Cauta medicul dintr-o locatie
+    @Query("SELECT * FROM program entity WHERE entity.medic_id = :medicId AND entity.locatie_id = :locatieId")
+    Flux<Program> findByMedicAndLocatie(Long medicId, Long locatieId);
+
     @Override
     <S extends Program> Mono<S> save(S entity);
 
